@@ -1,14 +1,21 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Movies.Client.Helpers;
 using Movies.Client.Services;
+using System.Text.Json;
 
 using IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((_, services) => {
         // register services for DI
         services.AddLogging(configure => configure.AddDebug().AddConsole());
 
-        services.AddHttpClient();
+        services.AddSingleton<JsonSerializerOptionsWrapper>();
+
+        services.AddHttpClient("MoviesAPIClient", configureClient => {
+            configureClient.BaseAddress = new Uri("http://localhost:5001");
+            configureClient.Timeout = new TimeSpan(0, 0, 30);
+        });
         // For the cancellation samples
         // services.AddScoped<IIntegrationService, CancellationSamples>();
 
