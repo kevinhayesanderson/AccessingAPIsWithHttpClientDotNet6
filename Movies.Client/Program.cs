@@ -8,6 +8,7 @@ using IHost host = Host.CreateDefaultBuilder(args)
         // register services for DI
         services.AddLogging(configure => configure.AddDebug().AddConsole());
 
+        services.AddHttpClient();
         // For the cancellation samples
         // services.AddScoped<IIntegrationService, CancellationSamples>();
 
