@@ -1,5 +1,6 @@
 ﻿namespace Movies.Client.Services;
-public interface IIntegrationService
-{
+
+public interface IIntegrationService {
+
     Task RunAsync();
 }

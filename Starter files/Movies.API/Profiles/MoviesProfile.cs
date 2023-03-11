@@ -5,10 +5,9 @@ namespace Movies.API;
 /// <summary>
 /// AutoMapper profile for working with Movie objects
 /// </summary>
-public class MoviesProfile : Profile
-{
-    public MoviesProfile()
-    {
+public class MoviesProfile : Profile {
+
+    public MoviesProfile() {
         CreateMap<Entities.Movie, Models.Movie>()
             .ForMember(dest => dest.Director, opt => opt.MapFrom(src =>
                $"{src.Director.FirstName} {src.Director.LastName}"))
@@ -17,10 +16,10 @@ public class MoviesProfile : Profile
                  src.ReleaseDate,
                  src.Genre,
                  src.Description,
-                 string.Empty)); 
+                 string.Empty));
 
         CreateMap<Models.MovieForCreation, Entities.Movie>();
 
-        CreateMap<Models.MovieForUpdate, Entities.Movie>().ReverseMap(); 
+        CreateMap<Models.MovieForUpdate, Entities.Movie>().ReverseMap();
     }
 }

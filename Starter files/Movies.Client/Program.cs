@@ -1,11 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Movies.Client.Services; 
+using Movies.Client.Services;
 
 using IHost host = Host.CreateDefaultBuilder(args)
-    .ConfigureServices((_, services) =>
-    { 
+    .ConfigureServices((_, services) => {
         // register services for DI
         services.AddLogging(configure => configure.AddDebug().AddConsole());
 
@@ -38,26 +37,21 @@ using IHost host = Host.CreateDefaultBuilder(args)
 
         // For the remote streaming samples
         // services.AddScoped<IIntegrationService, RemoteStreamingSamples>();
-
     }).Build();
 
-
-
-// For demo purposes: overall catch-all to log any exception that might 
-// happen to the console & wait for key input afterwards so we can easily 
-// inspect the issue.  
-try
-{
+// For demo purposes: overall catch-all to log any exception that might
+// happen to the console & wait for key input afterwards so we can easily
+// inspect the issue.
+try {
     var logger = host.Services.GetRequiredService<ILogger<Program>>();
     logger.LogInformation("Host created.");
 
     // Run the IntegrationService containing all samples and
-    // await this call to ensure the application doesn't 
+    // await this call to ensure the application doesn't
     // prematurely exit.
     await host.Services.GetRequiredService<IIntegrationService>().RunAsync();
 }
-catch (Exception generalException)
-{
+catch (Exception generalException) {
     // log the exception
     var logger = host.Services.GetRequiredService<ILogger<Program>>();
     logger.LogError(generalException,
@@ -67,5 +61,3 @@ catch (Exception generalException)
 Console.ReadKey();
 
 await host.RunAsync();
- 
- 

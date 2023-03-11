@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Movies.API.Entities;
 
 [Table("Movies")]
-public class Movie
-{
+public class Movie {
+
     [Key]
     public Guid Id { get; set; }
 
@@ -24,6 +24,7 @@ public class Movie
 
     [Required]
     public Guid DirectorId { get; set; }
+
     public Director Director { get; set; } = null!;
 
     public Movie(Guid id,
@@ -31,8 +32,7 @@ public class Movie
         string title,
         DateTimeOffset releaseDate,
         string? genre,
-        string? description)
-    {
+        string? description) {
         Id = id;
         DirectorId = directorId;
         Title = title;
@@ -42,11 +42,11 @@ public class Movie
     }
 
 #pragma warning disable CS8618
+
     // Parameterless constructor for easy AutoMapper integration
     // Disabled warning: Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public Movie()
-#pragma warning restore CS8618 
+#pragma warning restore CS8618
     {
-
     }
 }

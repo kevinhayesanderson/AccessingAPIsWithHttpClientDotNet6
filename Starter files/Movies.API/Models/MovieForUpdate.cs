@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Movies.API.Models;
 
-public class MovieForUpdate
-{
+public class MovieForUpdate {
+
     [Required]
     [MaxLength(200)]
     public string Title { get; set; }
@@ -27,20 +24,20 @@ public class MovieForUpdate
        DateTimeOffset releaseDate,
        Guid directorId,
        string? genre,
-       string? description)
-    {
+       string? description) {
         DirectorId = directorId;
         Title = title;
         Genre = genre;
         ReleaseDate = releaseDate;
         Description = description;
     }
-#pragma warning disable CS8618 
+
+#pragma warning disable CS8618
+
     // Parameterless constructor required for XML serialization
     // Disabled warning: Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public MovieForUpdate()
-#pragma warning restore CS8618  
+#pragma warning restore CS8618
     {
-
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Movies.API.InternalModels;
 
-public class Poster
-{
+public class Poster {
+
     [Required]
     public Guid Id { get; set; }
 
@@ -17,11 +17,10 @@ public class Poster
     [Required]
     public byte[] Bytes { get; set; }
 
-    public Poster(Guid id, 
+    public Poster(Guid id,
         Guid movieId,
-        string name, 
-        byte[] bytes)
-    {
+        string name,
+        byte[] bytes) {
         Id = id;
         MovieId = movieId;
         Name = name;
@@ -29,11 +28,11 @@ public class Poster
     }
 
 #pragma warning disable CS8618
+
     // Parameterless constructor required for XML serialization
     // Disabled warning: Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public Poster()
-#pragma warning restore CS8618 
+#pragma warning restore CS8618
     {
-
     }
 }

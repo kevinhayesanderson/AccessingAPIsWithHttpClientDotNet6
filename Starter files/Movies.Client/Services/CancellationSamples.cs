@@ -1,9 +1,8 @@
 ﻿namespace Movies.Client.Services;
 
-public class CancellationSamples : IIntegrationService
-{
-    public Task RunAsync()
-    {
+public class CancellationSamples : IIntegrationService {
+
+    public Task RunAsync() {
         throw new NotImplementedException();
     }
 }

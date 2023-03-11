@@ -8,48 +8,41 @@ namespace Movies.API.Controllers;
 
 [Route("api/movies")]
 [ApiController]
-public class MoviesController : ControllerBase
-{
+public class MoviesController : ControllerBase {
     private readonly IMoviesRepository _moviesRepository;
     private readonly IMapper _mapper;
 
-    public MoviesController(IMoviesRepository moviesRepository, 
-        IMapper mapper)
-    {
-        _moviesRepository = moviesRepository ?? 
+    public MoviesController(IMoviesRepository moviesRepository,
+        IMapper mapper) {
+        _moviesRepository = moviesRepository ??
             throw new ArgumentNullException(nameof(moviesRepository));
-        _mapper = mapper ?? 
+        _mapper = mapper ??
             throw new ArgumentNullException(nameof(mapper));
     }
 
     [HttpGet(Name = "GetMovies")]
-    public async Task<ActionResult<IEnumerable<Models.Movie>>> GetMovies()
-    {
+    public async Task<ActionResult<IEnumerable<Models.Movie>>> GetMovies() {
         var movieEntities = await _moviesRepository.GetMoviesAsync();
         var mapped = _mapper.Map<IEnumerable<Models.Movie>>(movieEntities);
         return Ok(_mapper.Map<IEnumerable<Models.Movie>>(movieEntities));
     }
-     
 
     [HttpGet("{movieId}", Name = "GetMovie")]
-    public async Task<ActionResult<Models.Movie>> GetMovie(Guid movieId)
-    {
+    public async Task<ActionResult<Models.Movie>> GetMovie(Guid movieId) {
         var movieEntity = await _moviesRepository.GetMovieAsync(movieId);
-        if (movieEntity == null)
-        {
+        if (movieEntity == null) {
             return NotFound();
         }
 
         return Ok(_mapper.Map<Models.Movie>(movieEntity));
-    } 
+    }
 
     [HttpPost]
     public async Task<IActionResult> CreateMovie(
-        [FromBody] Models.MovieForCreation movieForCreation)
-    { 
+        [FromBody] Models.MovieForCreation movieForCreation) {
         var movieEntity = _mapper.Map<Movie>(movieForCreation);
         _moviesRepository.AddMovie(movieEntity);
-        
+
         // save the changes
         await _moviesRepository.SaveChangesAsync();
 
@@ -60,14 +53,12 @@ public class MoviesController : ControllerBase
             new { movieId = movieEntity.Id },
             _mapper.Map<Models.Movie>(movieEntity));
     }
-     
+
     [HttpPut("{movieId}")]
-    public async Task<IActionResult> UpdateMovie(Guid movieId, 
-        [FromBody] Models.MovieForUpdate movieForUpdate)
-    {      
+    public async Task<IActionResult> UpdateMovie(Guid movieId,
+        [FromBody] Models.MovieForUpdate movieForUpdate) {
         var movieEntity = await _moviesRepository.GetMovieAsync(movieId);
-        if (movieEntity == null)
-        {
+        if (movieEntity == null) {
             return NotFound();
         }
 
@@ -75,9 +66,9 @@ public class MoviesController : ControllerBase
         // this ensures properties will get updated
         _mapper.Map(movieForUpdate, movieEntity);
 
-        // call into UpdateMovie even though in our implementation 
+        // call into UpdateMovie even though in our implementation
         // this doesn't contain code - doing this ensures the code stays
-        // reliable when other repository implemenations (eg: a mock 
+        // reliable when other repository implemenations (eg: a mock
         // repository) are used.
         _moviesRepository.UpdateMovie(movieEntity);
 
@@ -88,12 +79,10 @@ public class MoviesController : ControllerBase
     }
 
     [HttpPatch("{movieId}")]
-    public async Task<IActionResult> PartiallyUpdateMovie(Guid movieId, 
-        [FromBody] JsonPatchDocument<Models.MovieForUpdate> patchDoc)
-    {
+    public async Task<IActionResult> PartiallyUpdateMovie(Guid movieId,
+        [FromBody] JsonPatchDocument<Models.MovieForUpdate> patchDoc) {
         var movieEntity = await _moviesRepository.GetMovieAsync(movieId);
-        if (movieEntity == null)
-        {
+        if (movieEntity == null) {
             return NotFound();
         }
 
@@ -101,18 +90,17 @@ public class MoviesController : ControllerBase
         var movieToPatch = _mapper.Map<Models.MovieForUpdate>(movieEntity);
 
         patchDoc.ApplyTo(movieToPatch, ModelState);
-          
-        if (!ModelState.IsValid)
-        {
+
+        if (!ModelState.IsValid) {
             return new UnprocessableEntityObjectResult(ModelState);
         }
 
         // map back to the entity, and save
         _mapper.Map(movieToPatch, movieEntity);
 
-        // call into UpdateMovie even though in our implementation 
+        // call into UpdateMovie even though in our implementation
         // this doesn't contain code - doing this ensures the code stays
-        // reliable when other repository implemenations (eg: a mock 
+        // reliable when other repository implemenations (eg: a mock
         // repository) are used.
         _moviesRepository.UpdateMovie(movieEntity);
 
@@ -123,11 +111,9 @@ public class MoviesController : ControllerBase
     }
 
     [HttpDelete("{movieid}")]
-    public async Task<IActionResult> DeleteMovie(Guid movieId)
-    {
+    public async Task<IActionResult> DeleteMovie(Guid movieId) {
         var movieEntity = await _moviesRepository.GetMovieAsync(movieId);
-        if (movieEntity == null)
-        {
+        if (movieEntity == null) {
             return NotFound();
         }
 

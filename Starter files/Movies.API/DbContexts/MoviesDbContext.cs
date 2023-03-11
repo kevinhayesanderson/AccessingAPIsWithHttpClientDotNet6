@@ -3,18 +3,15 @@ using Movies.API.Entities;
 
 namespace Movies.API.DbContexts;
 
-public class MoviesDbContext : DbContext
-{
+public class MoviesDbContext : DbContext {
     public DbSet<Movie> Movies { get; set; } = null!;
 
     public MoviesDbContext(DbContextOptions<MoviesDbContext> options)
-        : base(options)
-    {
+        : base(options) {
     }
 
     // seed the database with data
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) {
         modelBuilder.Entity<Director>().HasData(
             new(Guid.Parse("d28888e9-2ba9-473a-a40f-e38cb54f9b35"),
                 "Quentin",
@@ -81,5 +78,4 @@ public class MoviesDbContext : DbContext
 
         base.OnModelCreating(modelBuilder);
     }
-
 }

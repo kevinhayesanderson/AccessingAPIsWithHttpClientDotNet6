@@ -1,9 +1,8 @@
 ﻿namespace Movies.Client.Services;
 
-public class CustomMessageHandlersSamples : IIntegrationService
-{
-    public Task RunAsync()
-    {
+public class CustomMessageHandlersSamples : IIntegrationService {
+
+    public Task RunAsync() {
         throw new NotImplementedException();
     }
 }

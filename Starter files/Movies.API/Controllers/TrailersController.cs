@@ -2,36 +2,28 @@
 using Microsoft.AspNetCore.Mvc;
 using Movies.API.InternalModels;
 using Movies.API.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Movies.API.Controllers
-{
+namespace Movies.API.Controllers {
+
     [Route("api/movies/{movieId}/trailers")]
     [ApiController]
-    public class TrailersController : ControllerBase
-    {
+    public class TrailersController : ControllerBase {
         private readonly ITrailersRepository _trailersRepository;
         private readonly IMapper _mapper;
 
         public TrailersController(ITrailersRepository trailersRepository,
-            IMapper mapper)
-        {
-            _trailersRepository = trailersRepository ?? 
+            IMapper mapper) {
+            _trailersRepository = trailersRepository ??
                 throw new ArgumentNullException(nameof(trailersRepository));
-            _mapper = mapper ?? 
+            _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
         }
 
         [HttpGet("{trailerId}", Name = "GetTrailer")]
-        public async Task<ActionResult<Models.Trailer>> GetTrailer(Guid movieId, 
-            Guid trailerId)
-        {
+        public async Task<ActionResult<Models.Trailer>> GetTrailer(Guid movieId,
+            Guid trailerId) {
             var trailer = await _trailersRepository.GetTrailerAsync(movieId, trailerId);
-            if (trailer == null)
-            {
+            if (trailer == null) {
                 return NotFound();
             }
 
@@ -40,13 +32,12 @@ namespace Movies.API.Controllers
 
         [HttpPost]
         public async Task<IActionResult> CreateTrailer(Guid movieId,
-            [FromBody] Models.TrailerForCreation trailerForCreation)
-        {
+            [FromBody] Models.TrailerForCreation trailerForCreation) {
             var trailer = _mapper.Map<Trailer>(trailerForCreation);
             var createdTrailer = await _trailersRepository.AddTrailer(movieId, trailer);
 
             // no need to save, in this type of repo the trailer is
-            // immediately persisted.  
+            // immediately persisted.
 
             // map the trailer from the repository to a shared model trailer
             return CreatedAtRoute("GetTrailer",

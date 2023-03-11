@@ -2,8 +2,8 @@
 
 namespace Movies.API.InternalModels;
 
-public class Trailer
-{
+public class Trailer {
+
     [Required]
     public Guid Id { get; set; }
 
@@ -20,26 +20,24 @@ public class Trailer
     [Required]
     public byte[] Bytes { get; set; }
 
-    public Trailer(Guid id, 
-        Guid movieId, 
-        string name, 
-        byte[] bytes, 
-        string? description)
-    {
+    public Trailer(Guid id,
+        Guid movieId,
+        string name,
+        byte[] bytes,
+        string? description) {
         Id = id;
         MovieId = MovieId;
         Name = name;
         Bytes = bytes;
-        Description = description; 
+        Description = description;
     }
 
 #pragma warning disable CS8618
+
     // Parameterless constructor required for XML serialization
     // Disabled warning: Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public Trailer()
-#pragma warning restore CS8618 
+#pragma warning restore CS8618
     {
-
     }
-
 }
