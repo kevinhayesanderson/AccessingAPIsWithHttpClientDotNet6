@@ -3,9 +3,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Movies.Client.Helpers;
 using Movies.Client.Services;
-using System.Text.Json;
 
-using IHost host = Host.CreateDefaultBuilder(args)
+internal class Program {
+
+    private static async Task Main(string[] args) {
+        using IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((_, services) => {
         // register services for DI
         services.AddLogging(configure => configure.AddDebug().AddConsole());
@@ -23,7 +25,7 @@ using IHost host = Host.CreateDefaultBuilder(args)
         // services.AddScoped<IIntegrationService, CompressionSamples>();
 
         // For the CRUD samples
-        services.AddScoped<IIntegrationService, CRUDSamples>();
+        //services.AddScoped<IIntegrationService, CRUDSamples>();
 
         // For the compression samples
         // services.AddScoped<IIntegrationService, CompressionSamples>();
@@ -41,31 +43,33 @@ using IHost host = Host.CreateDefaultBuilder(args)
         // services.AddScoped<IIntegrationService, LocalStreamsSamples>();
 
         // For the partial update samples
-        // services.AddScoped<IIntegrationService, PartialUpdateSamples>();
+        services.AddScoped<IIntegrationService, PartialUpdateSamples>();
 
         // For the remote streaming samples
         // services.AddScoped<IIntegrationService, RemoteStreamingSamples>();
     }).Build();
 
-// For demo purposes: overall catch-all to log any exception that might
-// happen to the console & wait for key input afterwards so we can easily
-// inspect the issue.
-try {
-    var logger = host.Services.GetRequiredService<ILogger<Program>>();
-    logger.LogInformation("Host created.");
+        // For demo purposes: overall catch-all to log any exception that might
+        // happen to the console & wait for key input afterwards so we can easily
+        // inspect the issue.
+        try {
+            var logger = host.Services.GetRequiredService<ILogger<Program>>();
+            logger.LogInformation("Host created.");
 
-    // Run the IntegrationService containing all samples and
-    // await this call to ensure the application doesn't
-    // prematurely exit.
-    await host.Services.GetRequiredService<IIntegrationService>().RunAsync();
+            // Run the IntegrationService containing all samples and
+            // await this call to ensure the application doesn't
+            // prematurely exit.
+            await host.Services.GetRequiredService<IIntegrationService>().RunAsync();
+        }
+        catch (Exception generalException) {
+            // log the exception
+            var logger = host.Services.GetRequiredService<ILogger<Program>>();
+            logger.LogError(generalException,
+                "An exception happened while running the integration service.");
+        }
+
+        Console.ReadKey();
+
+        await host.RunAsync();
+    }
 }
-catch (Exception generalException) {
-    // log the exception
-    var logger = host.Services.GetRequiredService<ILogger<Program>>();
-    logger.LogError(generalException,
-        "An exception happened while running the integration service.");
-}
-
-Console.ReadKey();
-
-await host.RunAsync();
