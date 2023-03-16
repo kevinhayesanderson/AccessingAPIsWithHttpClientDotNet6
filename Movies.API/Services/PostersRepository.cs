@@ -4,20 +4,24 @@ using Movies.API.InternalModels;
 
 namespace Movies.API.Services;
 
-public class PostersRepository : IPostersRepository {
+public class PostersRepository : IPostersRepository
+{
     private readonly MoviesDbContext _context;
 
-    public PostersRepository(MoviesDbContext context) {
+    public PostersRepository(MoviesDbContext context)
+    {
         _context = context ??
             throw new ArgumentNullException(nameof(context));
     }
 
-    public async Task<Poster?> GetPosterAsync(Guid movieId, Guid posterId) {
+    public async Task<Poster?> GetPosterAsync(Guid movieId, Guid posterId)
+    {
         // Generate the name from the movie title.
         var movie = await _context.Movies
          .FirstOrDefaultAsync(m => m.Id == movieId);
 
-        if (movie == null) {
+        if (movie == null)
+        {
             throw new Exception($"Movie with id {movieId} not found.");
         }
 
@@ -32,7 +36,8 @@ public class PostersRepository : IPostersRepository {
             generatedBytes);
     }
 
-    public async Task<Poster> AddPoster(Guid movieId, Poster posterToAdd) {
+    public async Task<Poster> AddPoster(Guid movieId, Poster posterToAdd)
+    {
         // don't do anything: we're just faking this.  Simply return the poster
         // after setting the ids
         posterToAdd.MovieId = movieId;

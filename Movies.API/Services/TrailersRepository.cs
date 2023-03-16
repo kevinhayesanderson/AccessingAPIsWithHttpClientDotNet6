@@ -4,20 +4,24 @@ using Movies.API.InternalModels;
 
 namespace Movies.API.Services;
 
-public class TrailersRepository : ITrailersRepository {
+public class TrailersRepository : ITrailersRepository
+{
     private MoviesDbContext _context;
 
-    public TrailersRepository(MoviesDbContext context) {
+    public TrailersRepository(MoviesDbContext context)
+    {
         _context = context ??
             throw new ArgumentNullException(nameof(context));
     }
 
-    public async Task<Trailer?> GetTrailerAsync(Guid movieId, Guid trailerId) {
+    public async Task<Trailer?> GetTrailerAsync(Guid movieId, Guid trailerId)
+    {
         // Generate the name from the movie title.
         var movie = await _context.Movies
          .FirstOrDefaultAsync(m => m.Id == movieId);
 
-        if (movie == null) {
+        if (movie == null)
+        {
             throw new Exception($"Movie with id {movieId} not found.");
         }
 
@@ -35,7 +39,8 @@ public class TrailersRepository : ITrailersRepository {
          $"{movie.Title} trailer description {DateTime.UtcNow.Ticks}");
     }
 
-    public async Task<Trailer> AddTrailer(Guid movieId, Trailer trailerToAdd) {
+    public async Task<Trailer> AddTrailer(Guid movieId, Trailer trailerToAdd)
+    {
         // don't do anything: we're just faking this.  Simply return the trailer
         // after setting the ids
         trailerToAdd.MovieId = movieId;

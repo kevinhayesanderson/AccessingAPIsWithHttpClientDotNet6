@@ -2,8 +2,8 @@
 
 namespace Movies.API.Services;
 
-public interface IPostersRepository {
-
+public interface IPostersRepository
+{
     Task<Poster?> GetPosterAsync(Guid movieId, Guid posterId);
 
     Task<Poster> AddPoster(Guid movieId, Poster posterToAdd);

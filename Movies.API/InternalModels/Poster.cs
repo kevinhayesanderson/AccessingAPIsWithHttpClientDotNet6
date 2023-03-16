@@ -2,8 +2,8 @@
 
 namespace Movies.API.InternalModels;
 
-public class Poster {
-
+public class Poster
+{
     [Required]
     public Guid Id { get; set; }
 
@@ -20,7 +20,8 @@ public class Poster {
     public Poster(Guid id,
         Guid movieId,
         string name,
-        byte[] bytes) {
+        byte[] bytes)
+    {
         Id = id;
         MovieId = movieId;
         Name = name;

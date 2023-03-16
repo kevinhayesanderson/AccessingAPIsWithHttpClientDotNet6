@@ -1,11 +1,13 @@
 ﻿using System.Text.Json;
 
-namespace Movies.Client.Helpers {
-
-    public class JsonSerializerOptionsWrapper {
+namespace Movies.Client.Helpers
+{
+    public class JsonSerializerOptionsWrapper
+    {
         public JsonSerializerOptions Options { get; set; }
 
-        public JsonSerializerOptionsWrapper() {
+        public JsonSerializerOptionsWrapper()
+        {
             Options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
         }
     }

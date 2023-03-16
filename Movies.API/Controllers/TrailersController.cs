@@ -3,16 +3,18 @@ using Microsoft.AspNetCore.Mvc;
 using Movies.API.InternalModels;
 using Movies.API.Services;
 
-namespace Movies.API.Controllers {
-
+namespace Movies.API.Controllers
+{
     [Route("api/movies/{movieId}/trailers")]
     [ApiController]
-    public class TrailersController : ControllerBase {
+    public class TrailersController : ControllerBase
+    {
         private readonly ITrailersRepository _trailersRepository;
         private readonly IMapper _mapper;
 
         public TrailersController(ITrailersRepository trailersRepository,
-            IMapper mapper) {
+            IMapper mapper)
+        {
             _trailersRepository = trailersRepository ??
                 throw new ArgumentNullException(nameof(trailersRepository));
             _mapper = mapper ??
@@ -21,9 +23,11 @@ namespace Movies.API.Controllers {
 
         [HttpGet("{trailerId}", Name = "GetTrailer")]
         public async Task<ActionResult<Models.Trailer>> GetTrailer(Guid movieId,
-            Guid trailerId) {
+            Guid trailerId)
+        {
             var trailer = await _trailersRepository.GetTrailerAsync(movieId, trailerId);
-            if (trailer == null) {
+            if (trailer == null)
+            {
                 return NotFound();
             }
 
@@ -32,7 +36,8 @@ namespace Movies.API.Controllers {
 
         [HttpPost]
         public async Task<IActionResult> CreateTrailer(Guid movieId,
-            [FromBody] Models.TrailerForCreation trailerForCreation) {
+            [FromBody] Models.TrailerForCreation trailerForCreation)
+        {
             var trailer = _mapper.Map<Trailer>(trailerForCreation);
             var createdTrailer = await _trailersRepository.AddTrailer(movieId, trailer);
 

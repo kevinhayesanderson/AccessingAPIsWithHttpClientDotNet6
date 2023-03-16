@@ -8,12 +8,14 @@ namespace Movies.API.Controllers;
 
 [Route("api/movies")]
 [ApiController]
-public class MoviesController : ControllerBase {
+public class MoviesController : ControllerBase
+{
     private readonly IMoviesRepository _moviesRepository;
     private readonly IMapper _mapper;
 
     public MoviesController(IMoviesRepository moviesRepository,
-        IMapper mapper) {
+        IMapper mapper)
+    {
         _moviesRepository = moviesRepository ??
             throw new ArgumentNullException(nameof(moviesRepository));
         _mapper = mapper ??
@@ -21,16 +23,19 @@ public class MoviesController : ControllerBase {
     }
 
     [HttpGet(Name = "GetMovies")]
-    public async Task<ActionResult<IEnumerable<Models.Movie>>> GetMovies() {
+    public async Task<ActionResult<IEnumerable<Models.Movie>>> GetMovies()
+    {
         var movieEntities = await _moviesRepository.GetMoviesAsync();
         var mapped = _mapper.Map<IEnumerable<Models.Movie>>(movieEntities);
         return Ok(_mapper.Map<IEnumerable<Models.Movie>>(movieEntities));
     }
 
     [HttpGet("{movieId}", Name = "GetMovie")]
-    public async Task<ActionResult<Models.Movie>> GetMovie(Guid movieId) {
+    public async Task<ActionResult<Models.Movie>> GetMovie(Guid movieId)
+    {
         var movieEntity = await _moviesRepository.GetMovieAsync(movieId);
-        if (movieEntity == null) {
+        if (movieEntity == null)
+        {
             return NotFound();
         }
 
@@ -39,7 +44,8 @@ public class MoviesController : ControllerBase {
 
     [HttpPost]
     public async Task<IActionResult> CreateMovie(
-        [FromBody] Models.MovieForCreation movieForCreation) {
+        [FromBody] Models.MovieForCreation movieForCreation)
+    {
         var movieEntity = _mapper.Map<Movie>(movieForCreation);
         _moviesRepository.AddMovie(movieEntity);
 
@@ -56,9 +62,11 @@ public class MoviesController : ControllerBase {
 
     [HttpPut("{movieId}")]
     public async Task<IActionResult> UpdateMovie(Guid movieId,
-        [FromBody] Models.MovieForUpdate movieForUpdate) {
+        [FromBody] Models.MovieForUpdate movieForUpdate)
+    {
         var movieEntity = await _moviesRepository.GetMovieAsync(movieId);
-        if (movieEntity == null) {
+        if (movieEntity == null)
+        {
             return NotFound();
         }
 
@@ -80,9 +88,11 @@ public class MoviesController : ControllerBase {
 
     [HttpPatch("{movieId}")]
     public async Task<IActionResult> PartiallyUpdateMovie(Guid movieId,
-        [FromBody] JsonPatchDocument<Models.MovieForUpdate> patchDoc) {
+        [FromBody] JsonPatchDocument<Models.MovieForUpdate> patchDoc)
+    {
         var movieEntity = await _moviesRepository.GetMovieAsync(movieId);
-        if (movieEntity == null) {
+        if (movieEntity == null)
+        {
             return NotFound();
         }
 
@@ -91,7 +101,8 @@ public class MoviesController : ControllerBase {
 
         patchDoc.ApplyTo(movieToPatch, ModelState);
 
-        if (!ModelState.IsValid) {
+        if (!ModelState.IsValid)
+        {
             return new UnprocessableEntityObjectResult(ModelState);
         }
 
@@ -111,9 +122,11 @@ public class MoviesController : ControllerBase {
     }
 
     [HttpDelete("{movieid}")]
-    public async Task<IActionResult> DeleteMovie(Guid movieId) {
+    public async Task<IActionResult> DeleteMovie(Guid movieId)
+    {
         var movieEntity = await _moviesRepository.GetMovieAsync(movieId);
-        if (movieEntity == null) {
+        if (movieEntity == null)
+        {
             return NotFound();
         }
 

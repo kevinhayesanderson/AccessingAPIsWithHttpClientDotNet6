@@ -2,8 +2,8 @@
 
 namespace Movies.API.InternalModels;
 
-public class Trailer {
-
+public class Trailer
+{
     [Required]
     public Guid Id { get; set; }
 
@@ -24,7 +24,8 @@ public class Trailer {
         Guid movieId,
         string name,
         byte[] bytes,
-        string? description) {
+        string? description)
+    {
         Id = id;
         MovieId = MovieId;
         Name = name;

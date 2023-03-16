@@ -1,6 +1,7 @@
 ﻿namespace Movies.API.Models;
 
-public class Trailer {
+public class Trailer
+{
     public Guid Id { get; set; }
     public Guid MovieId { get; set; }
     public string Name { get; set; }
@@ -11,7 +12,8 @@ public class Trailer {
        Guid movieId,
        string name,
        string? description,
-       byte[] bytes) {
+       byte[] bytes)
+    {
         Id = id;
         MovieId = movieId;
         Name = name;

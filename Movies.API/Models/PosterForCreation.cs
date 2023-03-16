@@ -2,8 +2,8 @@
 
 namespace Movies.API.Models;
 
-public class PosterForCreation {
-
+public class PosterForCreation
+{
     [Required]
     [MaxLength(200)]
     public string Name { get; set; }
@@ -13,7 +13,8 @@ public class PosterForCreation {
 
     public PosterForCreation(
       string name,
-      byte[] bytes) {
+      byte[] bytes)
+    {
         Name = name;
         Bytes = bytes;
     }

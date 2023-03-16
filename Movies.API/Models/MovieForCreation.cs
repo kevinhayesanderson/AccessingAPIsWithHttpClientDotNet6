@@ -2,8 +2,8 @@
 
 namespace Movies.API.Models;
 
-public class MovieForCreation {
-
+public class MovieForCreation
+{
     [Required]
     [MaxLength(200)]
     public string Title { get; set; }
@@ -25,7 +25,8 @@ public class MovieForCreation {
        DateTimeOffset releaseDate,
        Guid directorId,
        string? genre,
-       string? description) {
+       string? description)
+    {
         DirectorId = directorId;
         Title = title;
         Genre = genre;

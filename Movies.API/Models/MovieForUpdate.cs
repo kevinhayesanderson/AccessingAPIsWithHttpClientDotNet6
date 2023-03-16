@@ -2,8 +2,8 @@
 
 namespace Movies.API.Models;
 
-public class MovieForUpdate {
-
+public class MovieForUpdate
+{
     [Required]
     [MaxLength(200)]
     public string Title { get; set; }
@@ -24,7 +24,8 @@ public class MovieForUpdate {
        DateTimeOffset releaseDate,
        Guid directorId,
        string? genre,
-       string? description) {
+       string? description)
+    {
         DirectorId = directorId;
         Title = title;
         Genre = genre;

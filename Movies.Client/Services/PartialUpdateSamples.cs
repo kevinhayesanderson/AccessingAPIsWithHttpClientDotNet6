@@ -6,19 +6,23 @@ using System.Text;
 
 namespace Movies.Client.Services;
 
-public class PartialUpdateSamples : IIntegrationService {
+public class PartialUpdateSamples : IIntegrationService
+{
     private readonly IHttpClientFactory _httpClientFactory;
 
-    public PartialUpdateSamples(IHttpClientFactory httpClientFactory) {
+    public PartialUpdateSamples(IHttpClientFactory httpClientFactory)
+    {
         _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
     }
 
-    public async Task RunAsync() {
+    public async Task RunAsync()
+    {
         //await PatchResourceAsync();
         await PatchResourceShortcutAsync();
     }
 
-    public async Task PatchResourceAsync() {
+    public async Task PatchResourceAsync()
+    {
         HttpClient httpClient = _httpClientFactory.CreateClient("MoviesAPIClient");
 
         JsonPatchDocument<MovieForUpdate> patchDoc = new();
@@ -39,7 +43,8 @@ public class PartialUpdateSamples : IIntegrationService {
         Movie? updatedMovie = JsonConvert.DeserializeObject<Movie>(content);
     }
 
-    public async Task PatchResourceShortcutAsync() {
+    public async Task PatchResourceShortcutAsync()
+    {
         HttpClient httpClient = _httpClientFactory.CreateClient("MoviesAPIClient");
 
         JsonPatchDocument<MovieForUpdate> patchDoc = new();

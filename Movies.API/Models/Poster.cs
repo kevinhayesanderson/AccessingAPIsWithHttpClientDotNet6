@@ -1,6 +1,7 @@
 ﻿namespace Movies.API.Models;
 
-public class Poster {
+public class Poster
+{
     public Guid Id { get; set; }
     public Guid MovieId { get; set; }
     public string Name { get; set; }
@@ -9,7 +10,8 @@ public class Poster {
     public Poster(Guid id,
         Guid movieId,
         string name,
-        byte[] bytes) {
+        byte[] bytes)
+    {
         Id = id;
         MovieId = movieId;
         Name = name;

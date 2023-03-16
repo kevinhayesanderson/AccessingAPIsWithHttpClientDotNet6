@@ -1,6 +1,7 @@
 ﻿namespace Movies.API.Models;
 
-public class Movie {
+public class Movie
+{
     public Guid Id { get; set; }
     public string Title { get; set; }
     public string? Description { get; set; }
@@ -13,7 +14,8 @@ public class Movie {
         DateTimeOffset releaseDate,
         string? genre,
         string? description,
-        string director) {
+        string director)
+    {
         Id = id;
         Director = director;
         Title = title;

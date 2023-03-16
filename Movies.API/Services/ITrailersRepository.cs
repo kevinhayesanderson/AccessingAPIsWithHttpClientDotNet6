@@ -2,8 +2,8 @@
 
 namespace Movies.API.Services;
 
-public interface ITrailersRepository {
-
+public interface ITrailersRepository
+{
     Task<Trailer?> GetTrailerAsync(Guid movieId, Guid trailerId);
 
     Task<Trailer> AddTrailer(Guid movieId, Trailer trailerToAdd);

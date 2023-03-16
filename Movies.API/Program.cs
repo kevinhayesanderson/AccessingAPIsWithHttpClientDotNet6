@@ -1,15 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using Movies.API.DbContexts;
 using Movies.API.Services;
-using Newtonsoft.Json.Serialization;
 
-internal class Program {
-    private static async Task Main(string[] args) {
+internal class Program
+{
+    private static async Task Main(string[] args)
+    {
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
 
-        _ = builder.Services.AddControllers(options => {
+        _ = builder.Services.AddControllers(options =>
+        {
             // Return a 406 when an unsupported media type was requested
             options.ReturnHttpNotAcceptable = true;
 
@@ -40,7 +42,8 @@ internal class Program {
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         _ = builder.Services.AddEndpointsApiExplorer();
-        _ = builder.Services.AddSwaggerGen(setupAction => {
+        _ = builder.Services.AddSwaggerGen(setupAction =>
+        {
             setupAction.SwaggerDoc("v1",
                 new() { Title = "Movies API", Version = "v1" });
         }
@@ -50,22 +53,27 @@ internal class Program {
 
         // For demo purposes, delete the database & migrate on startup so
         // we can start with a clean slate
-        using (IServiceScope scope = app.Services.CreateScope()) {
-            try {
+        using (IServiceScope scope = app.Services.CreateScope())
+        {
+            try
+            {
                 MoviesDbContext? context = scope.ServiceProvider.GetService<MoviesDbContext>();
-                if (context != null) {
+                if (context != null)
+                {
                     _ = await context.Database.EnsureDeletedAsync();
                     await context.Database.MigrateAsync();
                 }
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 ILogger logger = scope.ServiceProvider.GetRequiredService<ILogger>();
                 logger.LogError(ex, "An error occurred while migrating the database.");
             }
         }
 
         // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment()) {
+        if (app.Environment.IsDevelopment())
+        {
             _ = app.UseSwagger();
             _ = app.UseSwaggerUI();
         }

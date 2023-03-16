@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Movies.API.Entities;
 
 [Table("Directors")]
-public class Director {
-
+public class Director
+{
     [Key]
     public Guid Id { get; set; }
 
@@ -19,7 +19,8 @@ public class Director {
 
     public Director(Guid id,
         string firstName,
-        string lastName) {
+        string lastName)
+    {
         Id = id;
         FirstName = firstName;
         LastName = lastName;

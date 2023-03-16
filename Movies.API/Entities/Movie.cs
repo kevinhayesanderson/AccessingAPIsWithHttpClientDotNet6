@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Movies.API.Entities;
 
 [Table("Movies")]
-public class Movie {
-
+public class Movie
+{
     [Key]
     public Guid Id { get; set; }
 
@@ -32,7 +32,8 @@ public class Movie {
         string title,
         DateTimeOffset releaseDate,
         string? genre,
-        string? description) {
+        string? description)
+    {
         Id = id;
         DirectorId = directorId;
         Title = title;

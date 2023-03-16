@@ -2,8 +2,8 @@
 
 namespace Movies.API.Services;
 
-public interface IMoviesRepository {
-
+public interface IMoviesRepository
+{
     Task<Movie?> GetMovieAsync(Guid movieId);
 
     Task<IEnumerable<Movie>> GetMoviesAsync();

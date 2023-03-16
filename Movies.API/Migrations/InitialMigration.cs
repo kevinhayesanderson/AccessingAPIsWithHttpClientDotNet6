@@ -2,25 +2,29 @@
 
 #nullable disable
 
-namespace Movies.API.Migrations {
-
-    public partial class InitialMigration : Migration {
-
-        protected override void Up(MigrationBuilder migrationBuilder) {
+namespace Movies.API.Migrations
+{
+    public partial class InitialMigration : Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
             migrationBuilder.CreateTable(
                 name: "Directors",
-                columns: table => new {
+                columns: table => new
+                {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     FirstName = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
                     LastName = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false)
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_Directors", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Movies",
-                columns: table => new {
+                columns: table => new
+                {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Title = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
                     Description = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: true),
@@ -28,7 +32,8 @@ namespace Movies.API.Migrations {
                     ReleaseDate = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
                     DirectorId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_Movies", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Movies_Directors_DirectorId",
@@ -109,7 +114,8 @@ namespace Movies.API.Migrations {
                 column: "DirectorId");
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder) {
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
             migrationBuilder.DropTable(
                 name: "Movies");
 

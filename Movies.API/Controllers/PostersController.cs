@@ -7,12 +7,14 @@ namespace Movies.API.Controllers;
 
 [Route("api/movies/{movieId}/posters")]
 [ApiController]
-public class PostersController : ControllerBase {
+public class PostersController : ControllerBase
+{
     private readonly IPostersRepository _postersRepository;
     private readonly IMapper _mapper;
 
     public PostersController(IPostersRepository postersRepository,
-        IMapper mapper) {
+        IMapper mapper)
+    {
         _postersRepository = postersRepository ??
             throw new ArgumentNullException(nameof(postersRepository));
         _mapper = mapper ??
@@ -21,9 +23,11 @@ public class PostersController : ControllerBase {
 
     [HttpGet("{posterId}", Name = "GetPoster")]
     public async Task<ActionResult<Models.Poster>> GetPoster(Guid movieId,
-        Guid posterId) {
+        Guid posterId)
+    {
         var poster = await _postersRepository.GetPosterAsync(movieId, posterId);
-        if (poster == null) {
+        if (poster == null)
+        {
             return NotFound();
         }
 
@@ -32,7 +36,8 @@ public class PostersController : ControllerBase {
 
     [HttpPost]
     public async Task<IActionResult> CreatePoster(Guid movieId,
-        [FromBody] Models.PosterForCreation posterForCreation) {
+        [FromBody] Models.PosterForCreation posterForCreation)
+    {
         var poster = _mapper.Map<Poster>(posterForCreation);
         var createdPoster = await _postersRepository.AddPoster(movieId, poster);
 
