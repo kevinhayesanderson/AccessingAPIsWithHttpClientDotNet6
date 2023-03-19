@@ -16,7 +16,7 @@ namespace Movies.Client
             _client = client;
             _jsonSerializerOptionsWrapper = jsonSerializerOptionsWrapper ??
                 throw new ArgumentNullException(nameof(jsonSerializerOptionsWrapper));
-            _client.BaseAddress = new Uri("http://localhost:5001");
+            _client.BaseAddress = new Uri(AppSettingsWrapper.BaseURL);
             _client.Timeout = new TimeSpan(0, 0, 30);
         }
 

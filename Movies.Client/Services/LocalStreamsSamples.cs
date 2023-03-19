@@ -45,6 +45,8 @@ public class LocalStreamsSamples : IIntegrationService
 
         Stream stream = await response.Content.ReadAsStreamAsync();
         Poster? poster = await JsonSerializer.DeserializeAsync<Poster>(stream, _jsonSerializerOptionsWrapper.Options);
+
+        Console.WriteLine(poster);
     }
 
     public async Task GetPosterWithStreamAndCompletionModeAsync()
@@ -60,6 +62,8 @@ public class LocalStreamsSamples : IIntegrationService
 
         Stream stream = await response.Content.ReadAsStreamAsync();
         Poster? poster = await JsonSerializer.DeserializeAsync<Poster>(stream, _jsonSerializerOptionsWrapper.Options);
+
+        Console.WriteLine(poster);
     }
 
     public async Task GetPosterWithoutStreamAsync()
@@ -111,6 +115,7 @@ public class LocalStreamsSamples : IIntegrationService
         Poster? poster = JsonSerializer.Deserialize<Poster>(content, _jsonSerializerOptionsWrapper.Options);
 
         //do something with newly created poster
+        Console.WriteLine(poster);
     }
 
     public async Task PostPosterWithoutStreamAsync()
@@ -140,9 +145,10 @@ public class LocalStreamsSamples : IIntegrationService
         _ = response.EnsureSuccessStatusCode();
 
         string content = await response.Content.ReadAsStringAsync();
-        _ = JsonSerializer.Deserialize<Poster>(content, _jsonSerializerOptionsWrapper.Options);
+        Poster? poster = JsonSerializer.Deserialize<Poster>(content, _jsonSerializerOptionsWrapper.Options);
 
         //do something with newly created poster
+        Console.WriteLine(poster);
     }
 
     public async Task PostAndReadPosterWithStreamAsync()
@@ -179,6 +185,7 @@ public class LocalStreamsSamples : IIntegrationService
         Poster? poster = await JsonSerializer.DeserializeAsync<Poster>(stream, _jsonSerializerOptionsWrapper.Options);
 
         //do something with newly created poster
+        Console.WriteLine(poster);
     }
 
     public async Task TestMethodAsync(Func<Task> functionToTest)

@@ -32,18 +32,18 @@ public class HttpClientFactorySamples : IIntegrationService
         _ = await _moviesAPIClient.GetMoviesAsync();
     }
 
-    //public async Task GetMoviesWithTypedHttpClientAsync()
-    //{
-    //    var request = new HttpRequestMessage(HttpMethod.Get, "api/movies");
-    //    request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+    ////public async Task GetMoviesWithTypedHttpClientAsync()
+    ////{
+    ////    var request = new HttpRequestMessage(HttpMethod.Get, "api/movies");
+    ////    request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-    //    var response = await _moviesAPIClient.Client.SendAsync(request);
-    //    response.EnsureSuccessStatusCode();
+    ////    var response = await _moviesAPIClient.Client.SendAsync(request);
+    ////    response.EnsureSuccessStatusCode();
 
-    //    var content = await response.Content.ReadAsStringAsync();
+    ////    var content = await response.Content.ReadAsStringAsync();
 
-    //    var movies = JsonSerializer.Deserialize<IEnumerable<Movie>>(content, _jsonSerializerOptionsWrapper.Options);
-    //}
+    ////    var movies = JsonSerializer.Deserialize<IEnumerable<Movie>>(content, _jsonSerializerOptionsWrapper.Options);
+    ////}
 
     public async Task GetFilmsAsync()
     {
@@ -71,6 +71,7 @@ public class HttpClientFactorySamples : IIntegrationService
 
             string content = await response.Content.ReadAsStringAsync();
             Console.WriteLine($"Request completed with statuis code: {response.StatusCode}");
+            Console.WriteLine(content);
         }
     }
 
