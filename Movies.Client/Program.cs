@@ -56,13 +56,13 @@ internal class Program
                     // services.AddScoped<IIntegrationService, HttpClientFactorySamples>();
 
                     // For the local streams samples
-                    services.AddScoped<IIntegrationService, LocalStreamsSamples>();
+                    // services.AddScoped<IIntegrationService, LocalStreamsSamples>();
 
                     // For the partial update samples
                     //services.AddScoped<IIntegrationService, PartialUpdateSamples>();
 
                     // For the remote streaming samples
-                    // services.AddScoped<IIntegrationService, RemoteStreamingSamples>();
+                    services.AddScoped<IIntegrationService, RemoteStreamingSamples>();
                 }).Build();
 
         // For demo purposes: overall catch-all to log any exception that might
