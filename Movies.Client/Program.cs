@@ -36,11 +36,11 @@ namespace Movies.Client
                         services.AddHttpClient<MoviesApiClient>();
 
                         // For the cancellation samples
-                        //// services.AddScoped<IIntegrationService, CancellationSamples>();
+                        ////
+                        services.AddScoped<IIntegrationService, CancellationSamples>();
 
                         // For the compression samples
-                        //// 
-                        services.AddScoped<IIntegrationService, CompressionSamples>();
+                        //// services.AddScoped<IIntegrationService, CompressionSamples>();
 
                         // For the CRUD samples
                         //// services.AddScoped<IIntegrationService, CRUDSamples>();
