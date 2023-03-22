@@ -62,8 +62,10 @@ public class FaultsAndErrorsSamples : IIntegrationService
                         }
                     }
                     return;
+
                 case HttpStatusCode.Unauthorized:
                     return;
+
                 default:
                     break;
             }
@@ -74,7 +76,6 @@ public class FaultsAndErrorsSamples : IIntegrationService
         Stream stream = await response.Content.ReadAsStreamAsync();
         Movie? movie = await JsonSerializer.DeserializeAsync<Movie>(stream, _jsonSerializerOptionsWrapper.Options);
         Console.WriteLine(movie);
-
     }
 
     public async Task GetMovieAndDealWithInvalidResponsesAsync(CancellationToken cancellationToken)
@@ -96,9 +97,11 @@ public class FaultsAndErrorsSamples : IIntegrationService
                     case HttpStatusCode.NotFound:
                         Console.WriteLine("The requested movie cannot be found");
                         return;
+
                     case HttpStatusCode.Unauthorized:
                         Console.WriteLine("Unauthorized access to requested movie");
                         return;
+
                     default:
                         break;
                 }
