@@ -24,7 +24,7 @@ public class CancellationSamples : IIntegrationService
         await GetTrailerAndHandleTimeoutAsync();
     }
 
-    private async Task GetTrailerAndHandleTimeoutAsync()
+    public async Task GetTrailerAndHandleTimeoutAsync()
     {
         HttpClient httpClient = _httpClientFactory.CreateClient("MoviesAPIClient");
 
@@ -35,8 +35,8 @@ public class CancellationSamples : IIntegrationService
         try
         {
             using HttpResponseMessage response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
-            Stream stream = await response.Content.ReadAsStreamAsync();
             _ = response.EnsureSuccessStatusCode();
+            Stream stream = await response.Content.ReadAsStreamAsync();
 
             Trailer? poster = await JsonSerializer.DeserializeAsync<Trailer>(stream, _jsonSerializerOptionsWrapper.Options);
             Console.WriteLine(poster);
@@ -47,7 +47,7 @@ public class CancellationSamples : IIntegrationService
         }
     }
 
-    private async Task GetTrailerAndCancelAsync(CancellationToken cancellationToken)
+    public async Task GetTrailerAndCancelAsync(CancellationToken cancellationToken)
     {
         HttpClient httpClient = _httpClientFactory.CreateClient("MoviesAPIClient");
 

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Movies.Client.Helpers;
 using Movies.Client.Services;
+using Polly;
 
 namespace Movies.Client
 {
@@ -24,7 +25,10 @@ namespace Movies.Client
                         {
                             configureClient.BaseAddress = new Uri(AppSettingsWrapper.BaseURL);
                             configureClient.Timeout = new TimeSpan(0, 0, 30);
-                        }).ConfigurePrimaryHttpMessageHandler(() =>
+                        })
+                        .AddPolicyHandler(Policy.HandleResult<HttpResponseMessage>(response => 
+                        !response.IsSuccessStatusCode).RetryAsync(5))
+                        .ConfigurePrimaryHttpMessageHandler(() =>
                         {
                             SocketsHttpHandler handler = new()
                             {
@@ -36,20 +40,20 @@ namespace Movies.Client
                         services.AddHttpClient<MoviesApiClient>();
 
                         // For the cancellation samples
-                        ////
-                        services.AddScoped<IIntegrationService, CancellationSamples>();
+                        //// services.AddScoped<IIntegrationService, CancellationSamples>();
 
                         // For the compression samples
                         //// services.AddScoped<IIntegrationService, CompressionSamples>();
 
                         // For the CRUD samples
-                        //// services.AddScoped<IIntegrationService, CRUDSamples>();
+                        //// services.AddScoped<IIntegrationService, CrudSamples>();
 
                         // For the custom message handler samples
                         //// services.AddScoped<IIntegrationService, CustomMessageHandlersSamples>();
 
                         // For the faults and errors samples
-                        //// services.AddScoped<IIntegrationService, FaultsAndErrorsSamples>();
+                        //// 
+                        services.AddScoped<IIntegrationService, FaultsAndErrorsSamples>();
 
                         // For the HttpClientFactory samples
                         //// services.AddScoped<IIntegrationService, HttpClientFactorySamples>();

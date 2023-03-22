@@ -6,12 +6,12 @@ using System.Xml.Serialization;
 
 namespace Movies.Client.Services;
 
-public class CRUDSamples : IIntegrationService
+public class CrudSamples : IIntegrationService
 {
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly JsonSerializerOptionsWrapper _jsonSerializerOptionsWrapper;
 
-    public CRUDSamples(IHttpClientFactory httpClientFactory, JsonSerializerOptionsWrapper jsonSerializerOptionsWrapper)
+    public CrudSamples(IHttpClientFactory httpClientFactory, JsonSerializerOptionsWrapper jsonSerializerOptionsWrapper)
     {
         _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
         _jsonSerializerOptionsWrapper = jsonSerializerOptionsWrapper ?? throw new ArgumentNullException(nameof(jsonSerializerOptionsWrapper));
