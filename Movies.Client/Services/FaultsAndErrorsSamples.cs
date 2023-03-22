@@ -96,6 +96,9 @@ public class FaultsAndErrorsSamples : IIntegrationService
                     case HttpStatusCode.NotFound:
                         Console.WriteLine("The requested movie cannot be found");
                         return;
+                    case HttpStatusCode.Unauthorized:
+                        Console.WriteLine("Unauthorized access to requested movie");
+                        return;
                     default:
                         break;
                 }

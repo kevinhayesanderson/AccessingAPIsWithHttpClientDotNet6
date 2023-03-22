@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Movies.Client.Handlers;
 using Movies.Client.Helpers;
 using Movies.Client.Services;
 using Polly;
@@ -9,7 +10,8 @@ namespace Movies.Client
 {
     public class Program
     {
-        protected Program() { }
+        protected Program()
+        { }
 
         private static async Task Main(string[] args)
         {
@@ -21,12 +23,14 @@ namespace Movies.Client
 
                         services.AddSingleton<JsonSerializerOptionsWrapper>();
 
+                        services.AddTransient(implementationFactory => new RetryPolicyDelegatingHandler(2));
+
                         services.AddHttpClient("MoviesAPIClient", configureClient =>
                         {
                             configureClient.BaseAddress = new Uri(AppSettingsWrapper.BaseURL);
                             configureClient.Timeout = new TimeSpan(0, 0, 30);
                         })
-                        .AddPolicyHandler(Policy.HandleResult<HttpResponseMessage>(response => 
+                        .AddPolicyHandler(Policy.HandleResult<HttpResponseMessage>(response =>
                         !response.IsSuccessStatusCode).RetryAsync(5))
                         .ConfigurePrimaryHttpMessageHandler(() =>
                         {
@@ -39,6 +43,20 @@ namespace Movies.Client
 
                         services.AddHttpClient<MoviesApiClient>();
 
+                        services.AddHttpClient("MoviesAPIClientWithCustomHandler", configureClient =>
+                        {
+                            configureClient.BaseAddress = new Uri(AppSettingsWrapper.BaseURL);
+                            configureClient.Timeout = new TimeSpan(0, 0, 30);
+                        })
+                        .AddHttpMessageHandler<RetryPolicyDelegatingHandler>()
+                        .ConfigurePrimaryHttpMessageHandler(() =>
+                        {
+                            return new SocketsHttpHandler()
+                            {
+                                AutomaticDecompression = System.Net.DecompressionMethods.GZip
+                            };
+                        });
+
                         // For the cancellation samples
                         //// services.AddScoped<IIntegrationService, CancellationSamples>();
 
@@ -49,11 +67,11 @@ namespace Movies.Client
                         //// services.AddScoped<IIntegrationService, CrudSamples>();
 
                         // For the custom message handler samples
-                        //// services.AddScoped<IIntegrationService, CustomMessageHandlersSamples>();
+                        ////
+                        services.AddScoped<IIntegrationService, CustomMessageHandlersSamples>();
 
                         // For the faults and errors samples
-                        //// 
-                        services.AddScoped<IIntegrationService, FaultsAndErrorsSamples>();
+                        //// services.AddScoped<IIntegrationService, FaultsAndErrorsSamples>();
 
                         // For the HttpClientFactory samples
                         //// services.AddScoped<IIntegrationService, HttpClientFactorySamples>();
