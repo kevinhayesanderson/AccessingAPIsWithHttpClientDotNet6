@@ -17,7 +17,7 @@ public class PartialUpdateSamples : IIntegrationService
 
     public async Task RunAsync()
     {
-        //await PatchResourceAsync();
+        //// await PatchResourceAsync();
         await PatchResourceShortcutAsync();
     }
 
@@ -41,6 +41,10 @@ public class PartialUpdateSamples : IIntegrationService
 
         string content = await response.Content.ReadAsStringAsync();
         Movie? updatedMovie = JsonConvert.DeserializeObject<Movie>(content);
+        if(updatedMovie != null)
+        {
+            Console.WriteLine(updatedMovie);
+        }
     }
 
     public async Task PatchResourceShortcutAsync()
@@ -57,5 +61,9 @@ public class PartialUpdateSamples : IIntegrationService
 
         string content = await response.Content.ReadAsStringAsync();
         Movie? updatedMovie = JsonConvert.DeserializeObject<Movie>(content);
+        if (updatedMovie != null)
+        {
+            Console.WriteLine(updatedMovie);
+        }
     }
 }
